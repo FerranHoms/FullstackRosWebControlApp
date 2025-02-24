@@ -5,12 +5,14 @@ import ControlPanel from './components/ControlPanel';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Welcome />} />
-        <Route path="/control" element={<ControlPanel />} />
-      </Routes>
-    </Router>
+    <div className="h-full w-full">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Welcome />} />
+          <Route path="/control" element={<ControlPanel />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 

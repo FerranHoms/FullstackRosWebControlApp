@@ -41,7 +41,7 @@ const ControlPanel = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+    <div className="flex flex-col items-center justify-center h-full w-full bg-gray-100 p-4">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Control Panel</h1>
       
       {/* Solenoid Controls */}
@@ -55,7 +55,7 @@ const ControlPanel = () => {
             max="4"
             value={solenoidNumber}
             onChange={(e) => setSolenoidNumber(parseInt(e.target.value))}
-            className="border border-gray-300 p-2 rounded w-full"
+            className="border border-gray-300 p-2 rounded w-full text-gray-800"
           />
         </div>
         <div className="mb-4">
@@ -63,7 +63,7 @@ const ControlPanel = () => {
           <select
             value={solenoidAction}
             onChange={(e) => setSolenoidAction(e.target.value)}
-            className="border border-gray-300 p-2 rounded w-full"
+            className="border border-gray-300 p-2 rounded w-full text-gray-800"
           >
             <option value="timed">Timed Activation</option>
             <option value="start">Start (Indefinite)</option>
@@ -78,7 +78,7 @@ const ControlPanel = () => {
               min="0"
               value={durationSeconds}
               onChange={(e) => setDurationSeconds(parseInt(e.target.value))}
-              className="border border-gray-300 p-2 rounded w-full"
+              className="border border-gray-300 p-2 rounded w-full text-gray-800"
             />
           </div>
         )}
@@ -101,7 +101,7 @@ const ControlPanel = () => {
             max="4"
             value={pumpNumber}
             onChange={(e) => setPumpNumber(parseInt(e.target.value))}
-            className="border border-gray-300 p-2 rounded w-full"
+            className="border border-gray-300 p-2 rounded w-full text-gray-800"
           />
         </div>
         <div className="mb-4">
@@ -109,7 +109,7 @@ const ControlPanel = () => {
           <select
             value={pumpAction}
             onChange={(e) => setPumpAction(e.target.value)}
-            className="border border-gray-300 p-2 rounded w-full"
+            className="border border-gray-300 p-2 rounded w-full text-gray-800"
           >
             <option value="timed">Timed Activation</option>
             <option value="start">Start (Indefinite)</option>
@@ -124,7 +124,7 @@ const ControlPanel = () => {
               min="0"
               value={durationSeconds}
               onChange={(e) => setDurationSeconds(parseInt(e.target.value))}
-              className="border border-gray-300 p-2 rounded w-full"
+              className="border border-gray-300 p-2 rounded w-full text-gray-800"
             />
           </div>
         )}

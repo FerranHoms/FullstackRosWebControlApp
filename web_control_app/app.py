@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
 
 app = Flask(__name__)
+CORS(app)
 
 class ControlNode(Node):
     def __init__(self):
@@ -49,5 +51,8 @@ def pump_control():
     node.send_pump_command(pump_number, duration_seconds, start, stop)
     return jsonify({'status': 'success'})
 
-if __name__ == '__main__':
+def main():
     app.run(host='0.0.0.0', port=5000)
+
+if __name__ == '__main__':
+    main()

@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'web_control_app = web_control_app.app:main',
         ],
     },
 )
