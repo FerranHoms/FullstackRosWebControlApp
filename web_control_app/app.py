@@ -14,17 +14,17 @@ class ControlNode(Node):
 
     def send_solenoid_command(self, solenoid_number, duration_seconds=0, start=False, stop=False):
         msg = Twist()
-        msg.linear.x = float(solenoid_number)  # Solenoid index (1-4)
-        msg.linear.y = float(duration_seconds * 1000)  # Duration in milliseconds
-        msg.angular.x = 1.0 if start else -1.0 if stop else 0.0  # Start or stop flag
+        msg.linear.x = float(solenoid_number)
+        msg.linear.y = float(duration_seconds * 1000)
+        msg.angular.x = 1.0 if start else -1.0 if stop else 0.0
         self.publisher.publish(msg)
         self.get_logger().info(f'Sent Solenoid {solenoid_number}: Duration {duration_seconds}s, Start: {start}, Stop: {stop}')
 
     def send_pump_command(self, pump_number, duration_seconds=0, start=False, stop=False):
         msg = Twist()
-        msg.linear.z = float(pump_number)  # Pump index (1-4)
-        msg.angular.y = float(duration_seconds * 1000)  # Duration in milliseconds
-        msg.angular.z = 1.0 if start else -1.0 if stop else 0.0  # Start or stop flag
+        msg.linear.z = float(pump_number)
+        msg.angular.y = float(duration_seconds * 1000)
+        msg.angular.z = 1.0 if start else -1.0 if stop else 0.0
         self.publisher.publish(msg)
         self.get_logger().info(f'Sent Pump {pump_number}: Duration {duration_seconds}s, Start: {start}, Stop: {stop}')
 
@@ -45,6 +45,8 @@ def solenoid_control():
 def pump_control():
     data = request.json
     pump_number = data.get('pump_number')
+    if pump_number not in [1, 2]:
+        return jsonify({'status': 'error', 'message': 'Invalid pump number (must be 1 or 2)'}), 400
     duration_seconds = data.get('duration_seconds', 0)
     start = data.get('start', False)
     stop = data.get('stop', False)

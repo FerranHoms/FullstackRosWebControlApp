@@ -44,7 +44,6 @@ const ControlPanel = () => {
     <div className="flex flex-col items-center justify-center h-full w-full bg-gray-100 p-4">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Control Panel</h1>
       
-      {/* Solenoid Controls */}
       <form onSubmit={handleSolenoidSubmit} className="mb-8 w-full max-w-md">
         <h2 className="text-2xl font-semibold mb-4">Solenoids</h2>
         <div className="mb-4">
@@ -90,15 +89,14 @@ const ControlPanel = () => {
         </button>
       </form>
 
-      {/* Pump Controls */}
       <form onSubmit={handlePumpSubmit} className="w-full max-w-md">
         <h2 className="text-2xl font-semibold mb-4">Pumps</h2>
         <div className="mb-4">
-          <label className="block text-gray-700">Pump Number (1-4):</label>
+          <label className="block text-gray-700">Pump Number (1-2):</label>
           <input
             type="number"
             min="1"
-            max="4"
+            max="2"
             value={pumpNumber}
             onChange={(e) => setPumpNumber(parseInt(e.target.value))}
             className="border border-gray-300 p-2 rounded w-full text-gray-800"
