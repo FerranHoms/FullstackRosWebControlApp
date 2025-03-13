@@ -8,4 +8,8 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
+  server: {
+    host: true, // Allow external access
+    allowedHosts: 'all', // Allow all hosts
+  }
 })
