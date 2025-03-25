@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: '/',
 });
 
-export const controlSolenoid = (data) => api.post('/solenoid', data);
-export const controlPump = (data) => api.post('/pump', data);
+export const controlCoffee = (data) => api.post('/api/coffee', data);

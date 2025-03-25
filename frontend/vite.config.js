@@ -9,7 +9,14 @@ export default defineConfig({
     tailwindcss()
   ],
   server: {
-    host: true, // Allow external access
-    allowedHosts: 'all', // Allow all hosts
+    host: true,
+    allowedHosts: ['.ngrok-free.app'],
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''), // Remove '/api' from the path
+      },
+    },
   }
 })

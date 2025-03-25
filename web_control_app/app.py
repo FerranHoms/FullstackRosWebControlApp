@@ -18,7 +18,9 @@ class ControlNode(Node):
         msg.linear.y = float(duration_seconds * 1000)
         msg.angular.x = 1.0 if start else -1.0 if stop else 0.0
         self.publisher.publish(msg)
-        self.get_logger().info(f'Sent Solenoid {solenoid_number}: Duration {duration_seconds}s, Start: {start}, Stop: {stop}')
+        self.get_logger().info(
+            f"Sent Dispenser {solenoid_number} (solenoid): Duration {duration_seconds}s, Start: {start}, Stop: {stop}"
+        )
 
     def send_pump_command(self, pump_number, duration_seconds=0, start=False, stop=False):
         msg = Twist()
@@ -26,31 +28,30 @@ class ControlNode(Node):
         msg.angular.y = float(duration_seconds * 1000)
         msg.angular.z = 1.0 if start else -1.0 if stop else 0.0
         self.publisher.publish(msg)
-        self.get_logger().info(f'Sent Pump {pump_number}: Duration {duration_seconds}s, Start: {start}, Stop: {stop}')
+        self.get_logger().info(
+            f"Sent Dispenser {pump_number+4} (pump): Duration {duration_seconds}s, Start: {start}, Stop: {stop}"
+        )
 
 rclpy.init()
 node = ControlNode()
 
-@app.route('/solenoid', methods=['POST'])
-def solenoid_control():
+@app.route('/coffee', methods=['POST'])
+def coffee_control():
     data = request.json
-    solenoid_number = data.get('solenoid_number')
-    duration_seconds = data.get('duration_seconds', 0)
-    start = data.get('start', False)
-    stop = data.get('stop', False)
-    node.send_solenoid_command(solenoid_number, duration_seconds, start, stop)
-    return jsonify({'status': 'success'})
+    dispenser_number = data.get('dispenser_number')
+    if dispenser_number is None or not (1 <= dispenser_number <= 8):
+        return jsonify({'status': 'error', 'message': 'Invalid dispenser number (must be 1-8)'}), 400
 
-@app.route('/pump', methods=['POST'])
-def pump_control():
-    data = request.json
-    pump_number = data.get('pump_number')
-    if pump_number not in [1, 2]:
-        return jsonify({'status': 'error', 'message': 'Invalid pump number (must be 1 or 2)'}), 400
     duration_seconds = data.get('duration_seconds', 0)
     start = data.get('start', False)
     stop = data.get('stop', False)
-    node.send_pump_command(pump_number, duration_seconds, start, stop)
+
+    if dispenser_number <= 4:
+        # For dispensers 1-4, use solenoid command
+        node.send_solenoid_command(dispenser_number, duration_seconds, start, stop)
+    else:
+        # For dispensers 5-8, map to pump relays (subtract 4)
+        node.send_pump_command(dispenser_number - 4, duration_seconds, start, stop)
     return jsonify({'status': 'success'})
 
 def main():
